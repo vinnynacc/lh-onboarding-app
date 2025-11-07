@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Lending Heights Mortgage Onboarding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-home"></i>
+                <h1>Lending Heights Mortgage</h1>
+                <p>Employee Onboarding System</p>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@lhloans.com" autocomplete="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password" autocomplete="current-password">
+                </div>
+                
+                <div class="form-actions">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password" onclick="handleForgotPassword(event)">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn-login" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Sign In</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <div class="social-login">
+                <button type="button" class="btn-google" onclick="handleGoogleLogin()" disabled title="Google login coming soon">
+                    <i class="fab fa-google"></i>
+                    <span>Continue with Google</span>
+                </button>
+                <button type="button" class="btn-microsoft" onclick="handleMicrosoftLogin()" disabled title="Microsoft login coming soon">
+                    <i class="fab fa-microsoft"></i>
+                    <span>Continue with Microsoft</span>
+                </button>
+            </div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#" onclick="handleSignup(event)">Request Access</a>
+            </div>
+        </div>
+        
+        <div class="info-footer">
+            <p><i class="fas fa-shield-alt"></i> Secure authentication powered by Supabase</p>
+            <p class="copyright">&copy; 2025 Lending Heights Mortgage. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-key"></i> Reset Password</h2>
+                <button class="modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+            </div>
+            <form id="forgotPasswordForm" onsubmit="handlePasswordReset(event)">
+                <p class="modal-description">Enter your email address and we'll send you a link to reset your password.</p>
+                <div class="form-group">
+                    <label for="resetEmail">Email Address</label>
+                    <input type="email" id="resetEmail" required placeholder="your.email@lhloans.com">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeForgotPasswordModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Send Reset Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Request Access</h2>
+                <button class="modal-close" onclick="closeSignupModal()">&times;</button>
+            </div>
+            <form id="signupForm" onsubmit="handleSignupSubmit(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="your.email@lhloans.com">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Minimum 8 characters" minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="signupPasswordConfirm">Confirm Password</label>
+                    <input type="password" id="signupPasswordConfirm" required placeholder="Re-enter password" minlength="8">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeSignupModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Supabase Client Configuration -->
+    <script src="js/supabase-client.js"></script>
+    
+    <!-- Authentication Logic -->
+    <script src="js/supabase-auth.js"></script>
+</body>
+</html>

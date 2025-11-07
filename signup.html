@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Lending Heights Mortgage</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-home"></i>
+                <h1>Lending Heights Mortgage</h1>
+                <p>Create Your Account</p>
+            </div>
+
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="fullName">
+                        <i class="fas fa-user"></i>
+                        Full Name
+                    </label>
+                    <input type="text" id="fullName" name="fullName" required 
+                           placeholder="John Doe" autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="your.email@lhloans.com" autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Minimum 8 characters" autocomplete="new-password" minlength="8">
+                    <small class="password-hint">Must be at least 8 characters long</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i>
+                        Confirm Password
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required 
+                           placeholder="Re-enter your password" autocomplete="new-password" minlength="8">
+                </div>
+
+                <button type="submit" id="signupButton" class="login-button">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Create Account</span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>Already have an account?</span>
+            </div>
+
+            <div class="signup-link">
+                <a href="login.html">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign in to your account
+                </a>
+            </div>
+
+            <div class="login-footer">
+                <p>&copy; 2025 Lending Heights Mortgage. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="message success-message" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <span id="successText"></span>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="message error-message" style="display: none;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <!-- Info Message (Email Verification) -->
+        <div id="infoMessage" class="message info-message" style="display: none;">
+            <i class="fas fa-envelope-open-text"></i>
+            <div id="infoText"></div>
+        </div>
+    </div>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-auth.js"></script>
+</body>
+</html>

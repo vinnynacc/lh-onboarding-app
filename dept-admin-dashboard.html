@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Admin Dashboard - Onboarding Checklist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Onboarding System</span>
+            </div>
+            <div class="nav-user">
+                <div class="user-info">
+                    <i class="fas fa-user-tie"></i>
+                    <span id="userName">Department Admin</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" onclick="showSection('overview')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('tasks')">
+                    <i class="fas fa-tasks"></i>
+                    <span>Manage Tasks</span>
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('analytics')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('employees')">
+                    <i class="fas fa-users"></i>
+                    <span>Employees</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview-section" class="content-section active">
+                <div class="section-header">
+                    <h1><i class="fas fa-chart-line"></i> Dashboard Overview</h1>
+                    <p>Complete analytics and system insights</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-primary">
+                        <div class="stat-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalTasksStat">17</div>
+                            <div class="stat-label">Total Tasks</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-success">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="completedTasksStat">0</div>
+                            <div class="stat-label">Completed Tasks</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-warning">
+                        <div class="stat-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pendingTasksStat">17</div>
+                            <div class="stat-label">Pending Tasks</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-info">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="completionRate">0%</div>
+                            <div class="stat-label">Completion Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-bar"></i> Tasks by Stage</h3>
+                        <div class="chart-container">
+                            <canvas id="tasksByStageChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-pie"></i> Completion Status</h3>
+                        <div class="chart-container">
+                            <canvas id="completionStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-card">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <div id="recentActivity" class="activity-list">
+                        <div class="activity-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span>No recent activity</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Task Management Section -->
+            <section id="tasks-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-tasks"></i> Task Overview</h1>
+                    <p style="color: #6b7280; font-size: 0.875rem;">View-only access</p>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Search tasks..." onkeyup="filterAdminTasks()">
+                    </div>
+                    <select id="adminBucketFilter" onchange="filterAdminTasks()">
+                        <option value="all">All Stages</option>
+                        <option value="Offer Extended">Offer Extended</option>
+                        <option value="🎯 Due First Week">🎯 Due First Week</option>
+                        <option value="Application Signed">Application Signed</option>
+                        <option value="💡 Due before Start Date">💡 Due before Start Date</option>
+                        <option value="🎉 30 Days In">🎉 30 Days In</option>
+                        <option value="🤝 60 Day Update">🤝 60 Day Update</option>
+                        <option value="💹 90 Day Update">💹 90 Day Update</option>
+                    </select>
+                </div>
+
+                <!-- Tasks Table -->
+                <div class="table-card">
+                    <table class="tasks-table">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Stage</th>
+                                <th>Priority</th>
+                                <th>Assigned To</th>
+                                <th>Status</th>
+                                <th>Complete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTableBody">
+                            <!-- Tasks will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-chart-pie"></i> Analytics & Insights</h1>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-line"></i> Progress Over Time</h3>
+                        <div class="chart-container">
+                            <canvas id="progressOverTimeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3><i class="fas fa-layer-group"></i> Tasks by Priority</h3>
+                        <div class="chart-container">
+                            <canvas id="priorityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> System Insights</h3>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <i class="fas fa-check"></i>
+                                <span id="insight1">System initialized successfully</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-tasks"></i>
+                                <span id="insight2">60 checklist items across all tasks</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-layer-group"></i>
+                                <span id="insight3">8 onboarding stages configured</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Employees Section -->
+            <section id="employees-section" class="content-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-users"></i> Employee Management</h1>
+                </div>
+
+                <div class="table-card">
+                    <table class="tasks-table">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Assigned Tasks</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-user"></i> John Doe</td>
+                                <td>john.doe@company.com</td>
+                                <td><span class="badge badge-user">User</span></td>
+                                <td>5 tasks</td>
+                                <td><span class="progress-badge">0%</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user-tie"></i> Department Admin</td>
+                                <td>deptadmin@company.com</td>
+                                <td><span class="badge badge-dept">Dept Admin</span></td>
+                                <td>View Only</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Edit Task</h2>
+                <button class="modal-close" onclick="closeEditTaskModal()">&times;</button>
+            </div>
+            <form id="editTaskForm" onsubmit="saveTaskEdit(event)">
+                <input type="hidden" id="editTaskId">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="editTaskName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="editTaskPriority">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stage</label>
+                        <select id="editTaskStage">
+                            <option value="Offer Extended">Offer Extended</option>
+                            <option value="🎯 Due First Week">🎯 Due First Week</option>
+                            <option value="Application Signed">Application Signed</option>
+                            <option value="💡 Due before Start Date">💡 Due before Start Date</option>
+                            <option value="🎉 30 Days In">🎉 30 Days In</option>
+                            <option value="🤝 60 Day Update">🤝 60 Day Update</option>
+                            <option value="💹 90 Day Update">💹 90 Day Update</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Assigned To</label>
+                    <input type="text" id="editTaskAssignee">
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="editTaskDueDate">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEditTaskModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add New Task</h2>
+                <button class="modal-close" onclick="closeAddTaskModal()">&times;</button>
+            </div>
+            <form id="addTaskForm" onsubmit="saveNewTask(event)">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="newTaskName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="newTaskPriority">
+                            <option value="High">High</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stage</label>
+                        <select id="newTaskStage">
+                            <option value="Offer Extended">Offer Extended</option>
+                            <option value="🎯 Due First Week">🎯 Due First Week</option>
+                            <option value="Application Signed">Application Signed</option>
+                            <option value="💡 Due before Start Date">💡 Due before Start Date</option>
+                            <option value="🎉 30 Days In">🎉 30 Days In</option>
+                            <option value="🤝 60 Day Update">🤝 60 Day Update</option>
+                            <option value="💹 90 Day Update">💹 90 Day Update</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Assigned To</label>
+                    <input type="text" id="newTaskAssignee" placeholder="e.g., John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="newTaskDueDate">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="newTaskDescription" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddTaskModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dept-admin-dashboard.js"></script>
+</body>
+</html>

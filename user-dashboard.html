@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Onboarding Tasks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/user-dashboard.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-clipboard-check"></i>
+                <span>My Onboarding</span>
+            </div>
+            <div class="nav-user">
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span id="userName">Employee</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="user-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome to Your Onboarding Journey! 🎉</h1>
+                <p>Complete the tasks below to successfully onboard at our company</p>
+            </div>
+            <div class="progress-widget">
+                <div class="progress-circle">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                        <circle id="progressCircle" cx="50" cy="50" r="45" fill="none" stroke="#3b82f6" stroke-width="8" 
+                                stroke-dasharray="283" stroke-dashoffset="283" 
+                                transform="rotate(-90 50 50)" stroke-linecap="round"/>
+                    </svg>
+                    <div class="progress-text">
+                        <span id="progressPercent">0%</span>
+                        <small>Complete</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-box">
+                <i class="fas fa-tasks"></i>
+                <div>
+                    <div class="stat-number" id="totalUserTasks">5</div>
+                    <div class="stat-label">Assigned Tasks</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <div class="stat-number" id="completedUserTasks">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <div class="stat-number" id="pendingUserTasks">5</div>
+                    <div class="stat-label">Remaining</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Tasks -->
+        <div class="tasks-section">
+            <h2><i class="fas fa-list-check"></i> My Tasks</h2>
+            
+            <div id="myTasksList" class="my-tasks-list">
+                <!-- Tasks will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-section">
+            <div class="help-card">
+                <i class="fas fa-question-circle"></i>
+                <h3>Need Help?</h3>
+                <p>If you have questions about any task, please contact your onboarding coordinator.</p>
+                <a href="mailto:hr@company.com" class="help-link">
+                    <i class="fas fa-envelope"></i> Contact HR
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/user-dashboard.js"></script>
+</body>
+</html>
